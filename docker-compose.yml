@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: bus-api
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - .:/var/www
+        env_file:
+            - .env
+        depends_on:
+            - postgres
+
+
+    nginx:
+        image: nginx:alpine
+        container_name: bus-nginx
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - .:/var/www
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - app
+
+
+    postgres:
+        image: postgres:15
+        container_name: bus-postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+    pgdata:
