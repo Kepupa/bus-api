@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Route;
 use App\Models\RouteStop;
 use App\Models\Stop;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RouteStopSeeder extends Seeder
@@ -25,7 +24,7 @@ class RouteStopSeeder extends Seeder
                 RouteStop::create([
                     'route_id' => $route->id,
                     'stop_id' => $stop->id,
-                    'stop_order' => $stopOrder++
+                    'stop_order' => $stopOrder++,
                 ]);
             }
         }

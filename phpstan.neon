@@ -1,0 +1,8 @@
+parameters:
+    level: max
+    paths:
+        - app/
+        - database/
+    ignoreErrors:
+        - "#Property .* has no typehint specified#"
+
