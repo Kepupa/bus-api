@@ -43,6 +43,8 @@
          APP_URL=http://localhost
 4. **Установка зависимостей**:
     ```bash
+     docker exec -it bus-api bash
+   
       composer install
 
 5. **Запуск контейнеров Docker**:
