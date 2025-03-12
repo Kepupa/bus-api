@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BusApi
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-10.x-red)
+![PHP](https://img.shields.io/badge/PHP-8.1-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-green)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
 
-## About Laravel
+**Описание:**
+`Bus API` — это backend-приложение на Laravel, которое предоставляет REST API для работы с расписанием рейсовых автобусов. Цель — реализовать функционал поиска автобусов по маршруту между остановками и управления маршрутами.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Возможности
+- **Поиск автобусов** (`/api/find-bus`): Возвращает список автобусов, проходящих через указанные остановки (`from` и `to`), с ближайшими временами прибытия.
+- **Управление маршрутами**(`api/routes/{id}`): Редактирование порядка остановок на маршруте.
+- Тестирование с использованием PHPUnit для проверки API. (очень простые тесты)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Установка
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Перед началом работы установим все нужные инструменты:
+   ```bash
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y git curl unzip zip php-cli php-mbstring php-xml php-bcmath php-tokenizer composer docker.io docker-compose
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Клонируйте репозиторий**:
+   ```bash
+    git clone <URL_репозитория> bus-api
+    cd bus-api
+2. **Создание .env и настройка переменных окружения**:
+   ```bash
+    cp .env.example .env
+   
+3. **В .env указываем данные для подключения к PostgreSQL**:
+    ```bash 
+         DB_CONNECTION=pgsql
+         DB_HOST=bus-postgres
+         DB_PORT=5432
+         DB_DATABASE=yourdb
+         DB_USERNAME=postgres
+         DB_PASSWORD=yourpassword
+         APP_URL=http://localhost
+4. **Установка зависимостей**:
+    ```bash
+      composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. **Запуск контейнеров Docker**:
+    ```bash
+   docker-compose up -d --build
 
-## Laravel Sponsors
+6. **Подготовка базы данных**:
+Выполняем миграции и наполняем БД тестовыми данными:
+    ```bash
+   docker exec -it bus-api php artisan migrate --seed
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. **Проверяем работу API**:
+Если нужна документация и список енд поинтов
+    ```bash
+    docker exec -it bus-api php artisan route:list
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+8. **Остановка и перезапуск контейнеров**:
+    ```bash
+        docker-compose down
+        docker-compose up -d
 
-## Contributing
+---
+**Дополнительно**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Диаграмма бд лежит в
 
-## Code of Conduct
+/database/schema
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Дамп базы
 
-## Security Vulnerabilities
+backup.dump
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3. Запустить тесты:
+```bash
+docker exec -it bus-api php artisan test

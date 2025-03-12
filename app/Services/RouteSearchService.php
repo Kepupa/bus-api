@@ -14,14 +14,6 @@ class RouteSearchService
         $fromStop = Stop::find($from);
         $toStop = Stop::find($to);
 
-        if (!$fromStop || !$toStop) {
-            return ['error' => 'Остановки не найдены'];
-        }
-
-        if ($fromStop === $toStop) {
-            return ['error' => 'Остановки не должны совпадать'];
-        }
-
         $routes = Route::whereHas('routeStops', fn ($q) => $q->where('stop_id', $from))
             ->whereHas('routeStops', fn ($q) => $q->where('stop_id', $to))
             ->get();

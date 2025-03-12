@@ -19,10 +19,6 @@ class RouteSearchController extends Controller
             return response()->json(['error' => 'Остановки отправления и прибытия не могут совпадать'], 400);
         }
 
-        if ($request->from === $request->to) {
-            return response()->json(['error' => 'Остановки отправления и прибытия не могут совпадать'], 400);
-        }
-
         return response()->json($service->search($request->from, $request->to));
     }
 
