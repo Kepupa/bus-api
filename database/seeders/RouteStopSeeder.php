@@ -14,6 +14,8 @@ class RouteStopSeeder extends Seeder
      */
     public function run(): void
     {
+        RouteStop::query()->delete();
+
         $routes = Route::all();
         $stops = Stop::all();
 

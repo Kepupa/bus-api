@@ -13,6 +13,8 @@ class RouteSeeder extends Seeder
      */
     public function run(): void
     {
+        Route::query()->delete();
+
         $buses = Bus::all();
 
         foreach ($buses as $bus) {

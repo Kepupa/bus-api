@@ -12,6 +12,8 @@ class StopSeeder extends Seeder
      */
     public function run(): void
     {
+        Stop::query()->delete();
+
         $stops = ['ул. Ленина', 'ул. Оушен-драйв', 'ост. Хорошей жизни', 'пл. Революции', 'ул. Стетхема'];
 
         foreach ($stops as $stop) {
