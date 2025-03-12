@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -19,9 +20,6 @@ class RouteSearchController extends Controller
             return response()->json(['error' => 'Остановки отправления и прибытия не могут совпадать'], 400);
         }
 
-        return response()->json($service->search($request->from, $request->to));
+        return response()->json($service->search((int)$request->from, (int)$request->to));
     }
-
-
-
 }
